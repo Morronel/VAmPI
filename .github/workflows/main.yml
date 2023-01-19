@@ -1,12 +1,13 @@
-build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get OAS
-        run: |
-          curl https://github.com/Morronel/VAmPI/blob/master/openapi_specs/openapi3.yml -o swagger.json
+on: workflow_dispatch
+    build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Get OAS
+            run: |
+              curl https://github.com/Morronel/VAmPI/blob/master/openapi_specs/openapi3.yml -o swagger.json
 
-      - name: Run Docker
-        run: >
-          docker run
-          --mount type=bind,source="$(pwd)",destination=/home public.ecr.aws/blst-security/cherrybomb:latest
-          cherrybomb oas -f /home/swagger.json --min-severity Critical --api-key=5763b85a93e748219d9050a50a30f3f2
+          - name: Run Docker
+            run: >
+              docker run
+              --mount type=bind,source="$(pwd)",destination=/home public.ecr.aws/blst-security/cherrybomb:latest
+              cherrybomb oas -f /home/swagger.json --min-severity Critical --api-key=5763b85a93e748219d9050a50a30f3f2
